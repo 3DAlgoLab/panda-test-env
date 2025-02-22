@@ -12,10 +12,8 @@ from gym import error, spaces, utils
 from gym.utils import seeding
 
 
-
-
 class PandaEnv(gym.Env):
-    metadata = {"render.models": ["human"]}
+    metadata = {"render_modes": ["human"], "render_fps": 60}
 
     def __init__(self):
         self.step_counter = 0
@@ -28,9 +26,14 @@ class PandaEnv(gym.Env):
         )
 
         # coordinate of end effector and grab
-        self.action_space = spaces.Box(np.array([-1] * 4), np.array([1] * 4))
+        self.action_space = spaces.Box(
+            np.array([-1.0] * 4, dtype=np.float32), np.array([1.0] * 4, dtype=np.float32)
+        )
+
         # joint variables of each fingers
-        self.observation_space = spaces.Box(np.array([-1] * 5), np.array([1] * 5))
+        self.observation_space = spaces.Box(
+            np.array([-1.0] * 5, dtype=np.float32), np.array([1.0] * 5, dtype=np.float32)
+        )
 
     def step(self, action):
         p.configureDebugVisualizer(p.COV_ENABLE_SINGLE_STEP_RENDERING)
@@ -78,9 +81,18 @@ class PandaEnv(gym.Env):
 
         info = {"object_position": state_object}
         observation = state_robot + state_fingers
-        return np.array(observation).astype(np.float32), reward, done, info
 
-    def reset(self):
+        # In new gym version, step method should return 5 members.
+        # obs, reward, terminated, truncated, info = result
+        return (
+            np.array(observation).astype(np.float32),
+            reward,
+            done,
+            False,
+            info,
+        )
+
+    def reset(self, seed=None, options=None):
         p.resetSimulation()
         # disable rendering temporarily
         p.configureDebugVisualizer(p.COV_ENABLE_RENDERING, 0)
@@ -126,7 +138,8 @@ class PandaEnv(gym.Env):
         )
         observation = state_robot + state_fingers
         p.configureDebugVisualizer(p.COV_ENABLE_RENDERING, 1)  # rendering's back on again
-        return observation
+        info = {"object_position": state_object}
+        return np.array(observation, dtype=np.float32), info
 
     def render(self, mode="human"):
         view_matrix = p.computeViewMatrixFromYawPitchRoll(

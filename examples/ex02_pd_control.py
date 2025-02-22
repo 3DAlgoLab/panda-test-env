@@ -17,7 +17,7 @@ dt = 1.0 / 240.0  # the default timestep in pybullet is 240 Hz
 t = 0
 
 for i_episode in range(5):
-    observation = env.reset()
+    observation, info = env.reset()
     fingers = 1
     for t in range(100):
         env.render()
@@ -38,7 +38,7 @@ for i_episode in range(5):
         pd_z = k_p * dz + k_d * dz / dt
 
         action = [pd_x, pd_y, pd_z, fingers]
-        observation, reward, done, info = env.step(action)
+        observation, reward, done, truncated, info = env.step(action)
         if done:
             print("Episode finished after {} timesteps".format(t + 1))
             break
