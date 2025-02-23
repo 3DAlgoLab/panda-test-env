@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "panda_test_env"
+version = "0.0.5.dev"
+description = "A OpenAI Gym env for testing pybullet simulator"
+authors = [{ name = "Jaeyoon" }]
+requires-python = ">=3.9"
+dependencies = ["gym", "pybullet", "numpy"]
