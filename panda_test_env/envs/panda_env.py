@@ -4,20 +4,29 @@ import math
 import os
 import random
 
-import gym
+# import gym
+import gymnasium as gym
 import numpy as np
 import pybullet as p
 import pybullet_data
-from gym import error, spaces, utils
-from gym.utils import seeding
+# from gym import error, utils
+# from gym.utils import seeding
+
+from gymnasium import spaces
 
 
 class PandaEnv(gym.Env):
-    metadata = {"render_modes": ["human"], "render_fps": 60}
+    # metadata = {"render_modes": ["human"], "render_fps": 60}
 
-    def __init__(self):
+    def __init__(self, render_mode=None):
         self.step_counter = 0
-        p.connect(p.GUI)
+        
+        # if render_mode is None:
+        #     p.connect(p.GUI)
+        # else:
+        #     p.connect(p.DIRECT)
+        p.connect(p.DIRECT)
+            
         p.resetDebugVisualizerCamera(
             cameraDistance=1.5,
             cameraYaw=0,

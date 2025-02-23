@@ -1,5 +1,6 @@
-import gym
+# import gym
 import panda_test_env
+import gymnasium as gym
 
 print(panda_test_env.__version__)
 env = gym.make("panda-test-v0")
