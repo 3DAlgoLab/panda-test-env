@@ -1,10 +1,11 @@
 # import gym
-import panda_test_env
-import gymnasium as gym
+from panda_test_env import PandaEnv
+# import gymnasium as gym
 
-print(panda_test_env.__version__)
-env = gym.make("panda-test-v0")
+# print(panda_test_env.__version__)
+# env = gym.make("panda-test-v0")
 
+env = PandaEnv()
 
 done = False
 error = 0.01
