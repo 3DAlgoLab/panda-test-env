@@ -1,2 +1,2 @@
-# PANDA Based PyBullet Gym Environment 
+# PyBullet Based Panda Robot Gym Environment 
 
