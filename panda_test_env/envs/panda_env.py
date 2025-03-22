@@ -20,13 +20,13 @@ class PandaEnv(gym.Env):
 
     def __init__(self, render_mode=None):
         self.step_counter = 0
-        
-        # if render_mode is None:
-        #     p.connect(p.GUI)
-        # else:
-        #     p.connect(p.DIRECT)
+
+        if render_mode is None:
+            p.connect(p.GUI)
+        else:
+            p.connect(p.DIRECT)
         p.connect(p.DIRECT)
-            
+
         p.resetDebugVisualizerCamera(
             cameraDistance=1.5,
             cameraYaw=0,
